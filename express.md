@@ -19,15 +19,15 @@ NodeJS를 사용하여 서버를 개발하고자 하는 개발자들을 위하여 서버를 쉽게 구성할 수
   });
 
   app.get('/',function(req,res,next){
-      console.log('GET 메서드 / 주소의 요청일 때만 실행 된다.');
-      res.send('GET 메서드 / 주소의 요청일 때만 실행 된다.');
-      next();
+    console.log('GET 메서드 / 주소의 요청일 때만 실행 된다.');
+    res.send('GET 메서드 / 주소의 요청일 때만 실행 된다.');
+    next();
   });
 
   app.post('/data',function(req,res,next){
-      console.log('POST 메서드 / data 주소의 요청일 때만 실행된다.');
-      res.send('POST 메서드 / data 주소의 요청일 때만 실행된다.');
-      next();
+    console.log('POST 메서드 / data 주소의 요청일 때만 실행된다.');
+    res.send('POST 메서드 / data 주소의 요청일 때만 실행된다.');
+    next();
   });
   ```
   > **use메서드**는 **모든 HTTP 메서드**에 대해 요청 주소만 일치하면 실행되지만,   
@@ -67,49 +67,49 @@ NodeJS를 사용하여 서버를 개발하고자 하는 개발자들을 위하여 서버를 쉽게 구성할 수
   ```javaScript
 const qs = require('querystring');
 app.get('/', (req, res) => {
-  let body = '';
-  req.on('data', function(data){
-      body = body + data;
-  });
-  req.on('end', function(){
-    body = qs.parse(body)
-    let reSend = `params: ${JSON.stringify(req.params)},
-    query: ${JSON.stringify(req.query)},
-    body: ${JSON.stringify(body)}`
-    let html =`
-      ${reSend}
-      <form action="/" method="post">
-        <input type="text" name="post" />
-        <p>
-          <input type="submit" value="POST TEST">
-        </p>
-      </form>
-    `
-    res.send(html);
-  });
+    let body = '';
+    req.on('data', function(data){
+        body = body + data;
+    });
+    req.on('end', function(){
+      body = qs.parse(body)
+      let reSend = `params: ${JSON.stringify(req.params)},
+      query: ${JSON.stringify(req.query)},
+      body: ${JSON.stringify(body)}`
+      let html =`
+        ${reSend}
+        <form action="/" method="post">
+          <input type="text" name="post" />
+          <p>
+            <input type="submit" value="POST TEST">
+          </p>
+        </form>
+      `
+      res.send(html);
+    });
 });
 
 app.post('/', (req, res) => {
-  let body = '';
-  req.on('data', function(data){
-      body = body + data;
-  });
-  req.on('end', function(){
-    body = qs.parse(body)
-    let reSend = `params: ${JSON.stringify(req.params)},
-    query: ${JSON.stringify(req.query)},
-    body: ${JSON.stringify(body)}`
-    let html =`
-      ${reSend}
-      <form action="/" method="get">
-        <input type="text" name="get" />
-        <p>
-          <input type="submit" value="GET TEST">
-        </p>
-      </form>
-    `
-    res.send(html);
-  });
+      let body = '';
+      req.on('data', function(data){
+          body = body + data;
+      });
+      req.on('end', function(){
+        body = qs.parse(body)
+        let reSend = `params: ${JSON.stringify(req.params)},
+        query: ${JSON.stringify(req.query)},
+        body: ${JSON.stringify(body)}`
+        let html =`
+          ${reSend}
+          <form action="/" method="get">
+            <input type="text" name="get" />
+            <p>
+              <input type="submit" value="GET TEST">
+            </p>
+          </form>
+        `
+        res.send(html);
+      });
 });
   ```
   > body-parser

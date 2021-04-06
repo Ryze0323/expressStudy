@@ -48,6 +48,113 @@ Node.JS Express
   });
   </code></pre>  
   
+  * 콜백함수 기본 구성: request, response, next   
+  <pre><code>
+  app.get('/page/:pageID', (req, res) => {
+    res.send(req.params.pageID + '첫번째') // 실행됨
+  });
+  </code></pre>  
+  * request   
+    - params: 라우터 파라미터를 지님   
+    - query: GET 방식으로 넘어오는 쿼리 스트링 파라미터를 가짐   
+    - body: POST 방식으로 넘어오는 파라미터를 지님   
+      + 파싱을 위해서는 body-parser와 같은 미들웨어 필요   
+    - ... 등등등   
+  <pre><code>
+const qs = require('querystring');
+app.get('/', (req, res) => {
+  let body = '';
+  req.on('data', function(data){
+      body = body + data;
+  });
+  req.on('end', function(){
+    body = qs.parse(body)
+    let reSend = `params: ${JSON.stringify(req.params)},
+    query: ${JSON.stringify(req.query)},
+    body: ${JSON.stringify(body)}`
+    let html =`
+      ${reSend}
+      <form action="/" method="post">
+        <input type="text" name="post" />
+        <p>
+          <input type="submit" value="POST TEST">
+        </p>
+      </form>
+    `
+    res.send(html);
+  });
+});
+
+app.post('/', (req, res) => {
+  let body = '';
+  req.on('data', function(data){
+      body = body + data;
+  });
+  req.on('end', function(){
+    body = qs.parse(body)
+    let reSend = `params: ${JSON.stringify(req.params)},
+    query: ${JSON.stringify(req.query)},
+    body: ${JSON.stringify(body)}`
+    let html =`
+      ${reSend}
+      <form action="/" method="get">
+        <input type="text" name="get" />
+        <p>
+          <input type="submit" value="GET TEST">
+        </p>
+      </form>
+    `
+    res.send(html);
+  });
+});
+  </code></pre>  
+  > body-parser
+  <pre><code>
+  const bodyParser = require('body-parser');
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.get('/', (req, res) => {
+    let reSend = `params: ${JSON.stringify(req.params)},
+    query: ${JSON.stringify(req.query)},
+    body: ${JSON.stringify(req.body)}`
+    let html =`
+      ${reSend}
+      <form action="/" method="post">
+        <input type="text" name="post" />
+        <p>
+          <input type="submit" value="POST TEST">
+        </p>
+      </form>
+    `
+    res.send(html);
+  });
+  app.post('/', (req, res) => {
+      let reSend = `params: ${JSON.stringify(req.params)},
+      query: ${JSON.stringify(req.query)},
+      body: ${JSON.stringify(req.body)}`
+      let html =`
+        ${reSend}
+        <form action="/" method="get">
+          <input type="text" name="get" />
+          <p>
+            <input type="submit" value="GET TEST">
+          </p>
+        </form>
+      `
+      res.send(html);
+  });
+  </code></pre>  
+  * response   
+    - send: 기본적인 만능 메서드   
+    - sendFile: 파일을 응답으로 전송   
+    - json: Json 전송  
+    - redirect: 응답을 다른 라우터로 전송   
+    - ... 등등등   
+  <pre><code>
+  app.get('/redirectTest', (req, res) => {
+    res.redirect('/'); // 홈 호출
+  });
+  </code></pre>  
+  
   * next   
     + 현재 라우터에서 판단하지 않고 다음 라우터로 넘기는 행위
  <pre><code>
@@ -68,7 +175,7 @@ Node.JS Express
   </code></pre>
   
   * next('route')   
-      - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용
+    - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용
       
 <pre><code>
    app.get('/', function(req,res,next){

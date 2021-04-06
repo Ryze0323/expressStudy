@@ -48,7 +48,7 @@ Node.JS Express
   </code></pre>  
   
   * next   
-   + 현재 라우터에서 판단하지 않고 다음 라우터로 넘기는 행위
+    + 현재 라우터에서 판단하지 않고 다음 라우터로 넘기는 행위
  <pre><code>
  app.get('/', function(req,res,next){
     console.log('0');
@@ -66,8 +66,8 @@ Node.JS Express
   })
   </code></pre>   
   
-   + next('route')
-    - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용   
+    + next('route')
+      - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용   
   <pre><code>
    app.get('/', function(req,res,next){
       console.log('0');

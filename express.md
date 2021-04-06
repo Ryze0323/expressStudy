@@ -6,7 +6,7 @@ Node.JS Express
 
   * 클라이언트에서 보내는 주소에 따라 다른 처리를 하는 것을 의미   
   * 기본 사용법: app[REST메소드]('주소', 콜백함수)   
-  Rest메소드에는 get, post, put,delete가 존재   
+  > Rest메소드에는 get, post, put,delete가 존재   
   <pre><code>
   app.get('/', (req, res) => {});
   </code></pre>   

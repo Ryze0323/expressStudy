@@ -49,11 +49,11 @@ Node.JS Express
   </code></pre>  
   
   * 콜백함수 기본 구성: request, response, next   
-  <pre><code>
+  ```javaScript
   app.get('/page/:pageID', (req, res) => {
     res.send(req.params.pageID + '첫번째') // 실행됨
   });
-  </code></pre>  
+  ```
   * request   
     - params: 라우터 파라미터를 지님   
     - query: GET 방식으로 넘어오는 쿼리 스트링 파라미터를 가짐   

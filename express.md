@@ -67,7 +67,7 @@ Node.JS Express
   })
   </code></pre>
   
-    + next('route')   
+  * next('route')   
       - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용
       
 <pre><code>

@@ -26,7 +26,8 @@ Node.JS Express
       next();
   });
   </code></pre>   
-  > **use메서드**는 **모든 HTTP 메서드**에 대해 요청 주소만 일치하면 실행되지만 **get, post, put, patch, delete** 같은 메서드는 **주소뿐만 아니라 HTTP 메서드까지 일치 하는 요청**일 때만 실행   
+  > **use메서드**는 **모든 HTTP 메서드**에 대해 요청 주소만 일치하면 실행되지만,
+   **get, post, put, patch, delete** 같은 메서드는 **주소뿐만 아니라 HTTP 메서드까지 일치 하는 요청**일 때만 실행   
   
   * 주소 부분은 정규 표현식도 가능하고 :(콜론)을 사용한 와일드카드도 가능   
   <pre><code>

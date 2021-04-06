@@ -90,26 +90,26 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-      let body = '';
-      req.on('data', function(data){
-          body = body + data;
-      });
-      req.on('end', function(){
-        body = qs.parse(body)
-        let reSend = `params: ${JSON.stringify(req.params)},
-        query: ${JSON.stringify(req.query)},
-        body: ${JSON.stringify(body)}`
-        let html =`
-          ${reSend}
-          <form action="/" method="get">
-            <input type="text" name="get" />
-            <p>
-              <input type="submit" value="GET TEST">
-            </p>
-          </form>
-        `
-        res.send(html);
-      });
+    let body = '';
+    req.on('data', function(data){
+        body = body + data;
+    });
+    req.on('end', function(){
+      body = qs.parse(body)
+      let reSend = `params: ${JSON.stringify(req.params)},
+      query: ${JSON.stringify(req.query)},
+      body: ${JSON.stringify(body)}`
+      let html =`
+        ${reSend}
+        <form action="/" method="get">
+          <input type="text" name="get" />
+          <p>
+            <input type="submit" value="GET TEST">
+          </p>
+        </form>
+      `
+      res.send(html);
+    });
 });
   ```
   > body-parser
@@ -132,19 +132,19 @@ app.post('/', (req, res) => {
     res.send(html);
   });
   app.post('/', (req, res) => {
-      let reSend = `params: ${JSON.stringify(req.params)},
-      query: ${JSON.stringify(req.query)},
-      body: ${JSON.stringify(req.body)}`
-      let html =`
-        ${reSend}
-        <form action="/" method="get">
-          <input type="text" name="get" />
-          <p>
-            <input type="submit" value="GET TEST">
-          </p>
-        </form>
-      `
-      res.send(html);
+    let reSend = `params: ${JSON.stringify(req.params)},
+    query: ${JSON.stringify(req.query)},
+    body: ${JSON.stringify(req.body)}`
+    let html =`
+      ${reSend}
+      <form action="/" method="get">
+        <input type="text" name="get" />
+        <p>
+          <input type="submit" value="GET TEST">
+        </p>
+      </form>
+    `
+    res.send(html);
   });
   ``` 
   * response   
@@ -181,37 +181,37 @@ app.post('/', (req, res) => {
   * next('route')   
     - 라우터에 연결된 나머지 미들웨어들을 건너뛰고 싶을 때 사용
       
-```javaScript
-   app.get('/', function(req,res,next){
-      console.log('0');
-      next('route');
-    },function(req,res,next){
-        console.log('1');
-        next();
-    },function(req,res,next){
-        next();
-        console.log('2');
-    });
-     
-    app.get('/',function(req,res){
-        console.log('3');
-    })
-```
+  ```javaScript
+  app.get('/', function(req,res,next){
+    console.log('0');
+    next('route');
+  },function(req,res,next){
+      console.log('1');
+      next();
+  },function(req,res,next){
+      next();
+      console.log('2');
+  });
+   
+  app.get('/',function(req,res){
+      console.log('3');
+  })
+  ```
   
    > **route외 다른 매개변수 전달시 error로 감**   
-   ```javaScript
-   app.get('/', function(req,res,next){
-      console.log('0');
-      next('test입니다.');
-    },function(req,res,next){
-        console.log('1');
-        next();
-    },function(req,res,next){
-        next();
-        console.log('2');
-    });
-     
-    app.use(function(err, req, res, next) {
-      res.status(500).send(err);
-    })
+  ```javaScript
+  app.get('/', function(req,res,next){
+    console.log('0');
+    next('test입니다.');
+  },function(req,res,next){
+      console.log('1');
+      next();
+  },function(req,res,next){
+      next();
+      console.log('2');
+  });
+   
+  app.use(function(err, req, res, next) {
+    res.status(500).send(err);
+  })
   ```

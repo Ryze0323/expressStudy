@@ -227,6 +227,6 @@ app.use(express.urlencoded({ extended: false }));
 ```
 app.use 메서드의 인자로 들어 있는 함수가 미들웨어임   
    
-> 구조   
-   test
+> 구조   <br>
+
 ![ex_screenshot](./img/미들웨어.jpg)

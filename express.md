@@ -9,7 +9,7 @@ NodeJS를 사용하여 서버를 개발하고자 하는 개발자들을 위하여 서버를 쉽게 구성할 수
 ------
 
   * 클라이언트에서 보내는 주소에 따라 다른 처리를 하는 것을 의미   
-  * 기본 사용법: app[REST메소드]('주소', 콜백함수)   
+  * 기본 사용법: app[REST메소드]('주소', 콜백함수, 콜백함수, 콜백함수....)   
   > Rest메소드: use, get, post, put, delete  
   ```javaScript
   app.use('/',function(req,res,next){
@@ -215,3 +215,14 @@ app.post('/', (req, res) => {
     res.status(500).send(err);
   })
   ```
+  
+미들웨어
+-------
+요청과 응답의 중간(middle, 미들)에 위치하여 미들웨어라 불림   
+미들웨어는 주로 app.use와 함께 사용
+```javaScript
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+```
+app.use 메서드의 인자로 들어 있는 함수가 미들웨어임

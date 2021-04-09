@@ -112,10 +112,11 @@ app.post('/', (req, res) => {
     });
 });
   ```
-  > body-parser
+  > body-parser: 요청의 본문을 해석해줌
+  
   ```javaScript
   const bodyParser = require('body-parser');
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.urlencoded({ extended: false })); // true => qs 모듈(npm 패키지) 사용, false => querystring 모듈(내장모듈) 사용
   app.get('/', (req, res) => {
     let reSend = `params: ${JSON.stringify(req.params)},
     query: ${JSON.stringify(req.query)},
@@ -147,6 +148,7 @@ app.post('/', (req, res) => {
     res.send(html);
   });
   ``` 
+  
   * response   
     - send: 기본적인 만능 메서드   
     - sendFile: 파일을 응답으로 전송   
@@ -236,5 +238,68 @@ app.use 메서드의 인자로 들어 있는 함수가 미들웨어임
  + 라우터 레벨 미들웨어: router에서 작동하는 미들웨어   
  + 오류 처리 미들웨어: 에러 처리를 위해 미들웨어   
  + 써드파티 미들웨어: body-parser와 같은 미들웨어   
+ 
+express-session
+---------------
+ 세션 관리용 미들웨어   
+ 세션 관리 시 클라이언트에 쿠키를 보냄   
+    
+설치
+```javaScript
+npm i express-session
+```
 
-+ 커스텀 미들웨어
+사용   
+```javaScript
+var session = require('express-session');
+const FileStore = require('session-file-store')(session); 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(session({
+ secret: 'secret',
+ resave: false,
+ saveUninitialized: true,
+ store: new FileStore()
+}));
+
+app.get('/', function(req, res){
+  let html
+  if (req.session.user) {
+    html =`
+      user: ${req.session.user}
+      <br/>
+      <a href="/delete">delete</a>
+    `
+  } else {
+    html =`
+    세션을 설정해 주세요
+    <form action="/" method="post">
+    <input type="text" name="session">
+     <p>
+       <input type="submit" value="newSession">
+     </p>
+   </form>`
+  }
+  res.send(html);
+});
+
+app.get('/delete', (req, res) => {
+  req.session.destroy(function(err){
+    req.session;
+  })
+  res.redirect('/');
+})
+
+app.post('/', (req, res) => {
+  req.session.user = req.body.session;
+  res.redirect('/');
+})
+
+```
+
++ resave: 요청 왔을 때 세션 수정이 생기지 않더라도 세션을 다시 저장할지 설정
++ saveUninitialized: 세션에 저장할 내역이 없더라도 세션을 저장할지에 대한 설정 (보통 방문자 추적용도)
++ secret: 쿠키를 임의로 변조하는것을 방지하기 위한 값으로 세션을 암호화 하여 저장
+
+> 
